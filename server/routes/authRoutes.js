@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { register, login } = require('../controllers/authController');
+const { register, login, updatePassword } = require('../controllers/authController');
+const { protect } = require('../middleware/authMiddleware');
 
+router.post('/update-password', protect(), updatePassword); // protect() without args allows any logged in user
 // Route for registration: http://localhost:5000/api/auth/register
 router.post('/register', register);
 router.post('/login', login);
