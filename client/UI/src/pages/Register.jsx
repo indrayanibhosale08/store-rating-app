@@ -32,7 +32,6 @@ const Register = () => {
       alert(res.data.message);
       navigate("/login");
     } catch (err) {
-      // This log is crucial for debugging
       console.error("Error details:", err);
 
       const errorMsg =

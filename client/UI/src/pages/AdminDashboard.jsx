@@ -25,7 +25,7 @@ export default function AdminDashboard() {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
 
-  // 2. Fetching Logic
+  // 2. Fetch Logic
   const fetchStats = () => {
     axios
       .get("http://localhost:5000/api/admin/stats", config)
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
       .catch((err) => console.error("Error fetching list", err));
   };
 
-  // Add these states at the top
+  
   const [showUserForm, setShowUserForm] = useState(false);
   const [userData, setUserData] = useState({
     name: "",

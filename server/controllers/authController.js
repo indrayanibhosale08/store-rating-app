@@ -6,7 +6,6 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password, address, role } = req.body;
 
-    // Validation for Name (20-60 characters)
     if (!name || name.length < 20 || name.length > 60) {
       return res
         .status(400)
@@ -59,12 +58,10 @@ exports.login = async (req, res) => {
   }
 };
 
-// Add this to your existing exports
 exports.updatePassword = async (req, res) => {
     try {
         const { newPassword } = req.body;
 
-        // Password Validation (8-16 chars, 1 Upper, 1 Special)
         const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,16})/;
         if (!passwordRegex.test(newPassword)) {
             return res.status(400).json({ 

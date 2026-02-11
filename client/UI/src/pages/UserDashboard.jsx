@@ -2,13 +2,11 @@ import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 
 export default function UserDashboard() {
-  // --- STATES ---
   const [stores, setStores] = useState([]);
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   
-  // Password Modal States
   const [showPassModal, setShowPassModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
 
@@ -16,7 +14,6 @@ export default function UserDashboard() {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
 
-  // --- API CALLS ---
   useEffect(() => {
     fetchStores();
   }, []);
@@ -28,7 +25,6 @@ export default function UserDashboard() {
       .catch((err) => console.error("Error fetching stores", err));
   };
 
-  // REQ: "Submit rating" AND "Modify rating" (Both handled here)
   const handleRate = (storeId, ratingValue) => {
     axios
       .post(
@@ -37,12 +33,11 @@ export default function UserDashboard() {
         config
       )
       .then(() => {
-        fetchStores(); // Refresh to show new Average
+        fetchStores(); 
       })
       .catch((err) => alert("Error submitting rating"));
   };
 
-  // REQ: "Update Password after logging in"
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,16})/;
@@ -59,13 +54,12 @@ export default function UserDashboard() {
     }
   };
 
-  // REQ: "Search by Name AND Address" & "Sort"
   const processedStores = useMemo(() => {
     return stores
       .filter(
         (s) =>
           (s.name || "").toLowerCase().includes(search.toLowerCase()) ||
-          (s.address || "").toLowerCase().includes(search.toLowerCase()) // Checks Address too
+          (s.address || "").toLowerCase().includes(search.toLowerCase()) 
       )
       .sort((a, b) => {
         if (sortKey === "name") {
@@ -91,7 +85,6 @@ export default function UserDashboard() {
     <div className="p-8 bg-gray-50 min-h-screen font-sans">
       <div className="max-w-5xl mx-auto">
         
-        {/* REQ: Log out from system */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-black text-gray-800">Store Directory</h1>
@@ -113,7 +106,6 @@ export default function UserDashboard() {
           </div>
         </div>
 
-        {/* REQ: Search & Sorting UI */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border mb-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="relative w-full md:w-96">
@@ -142,7 +134,6 @@ export default function UserDashboard() {
             </div>
         </div>
 
-        {/* REQ: List of all registered stores */}
         <div className="space-y-4">
           {processedStores.length > 0 ? (
             processedStores.map((s) => (
@@ -151,16 +142,13 @@ export default function UserDashboard() {
                   className="p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-xl transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
                 >
                   <div className="flex-1">
-                    {/* REQ: Display Store Name & Address */}
                     <h2 className="text-xl font-black text-gray-800">{s.name}</h2>
                     <p className="text-gray-400 text-sm mt-1">📍 {s.address}</p>
                     
                     <div className="flex items-center gap-2 mt-3">
-                        {/* REQ: Display Overall Rating */}
                         <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-black text-sm border border-blue-100">
                             Overall: ⭐ {s.rating || 0}
                         </span>
-                        {/* REQ: Display User's Submitted Rating */}
                         {s.myRating > 0 && (
                             <span className="text-xs font-bold text-green-500 italic">
                                 You rated this {s.myRating} stars
@@ -173,7 +161,6 @@ export default function UserDashboard() {
                     <span className="text-[10px] font-black text-gray-300 mb-2 uppercase tracking-widest">
                        {s.myRating > 0 ? "Modify Your Rating" : "Submit a Rating"}
                     </span>
-                    {/* REQ: Submit rating (1-5) & Modify Rating */}
                     <div className="flex gap-2">
                       {[1, 2, 3, 4, 5].map((n) => (
                         <button
@@ -199,7 +186,6 @@ export default function UserDashboard() {
           )}
         </div>
 
-        {/* REQ: Password Update Modal */}
         {showPassModal && (
             <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50">
                 <div className="bg-white p-8 rounded-3xl max-w-sm w-full shadow-2xl animate-in zoom-in duration-200">

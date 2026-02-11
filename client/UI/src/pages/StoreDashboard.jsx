@@ -7,10 +7,8 @@ export default function StoreDashboard() {
   const [raters, setRaters] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Sorting State for the list of users
   const [sort, setSort] = useState({ key: "createdAt", dir: "desc" });
 
-  // Password Update States
   const [showPassModal, setShowPassModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
 
@@ -55,7 +53,6 @@ export default function StoreDashboard() {
     window.location.href = "/login";
   };
 
-  // REQ: All tables should support sorting
   const sortedRaters = useMemo(() => {
     return [...raters].sort((a, b) => {
       let valA = sort.key === "name" ? a.user.name : a[sort.key];
@@ -80,7 +77,6 @@ export default function StoreDashboard() {
     <div className="min-h-screen bg-gray-50 p-6 md:p-12 font-sans">
       <div className="max-w-5xl mx-auto">
         
-        {/* Header: REQ - Can log out and update password */}
         <header className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-4xl font-black text-gray-900 tracking-tight">{storeInfo.name}</h1>
@@ -92,7 +88,6 @@ export default function StoreDashboard() {
           </div>
         </header>
 
-        {/* REQ: See the average rating of their store */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           <div className="bg-white p-10 rounded-3xl shadow-sm border text-center">
             <p className="text-gray-400 font-bold text-xs uppercase mb-2">Overall Average Rating</p>
@@ -104,7 +99,6 @@ export default function StoreDashboard() {
           </div>
         </div>
 
-        {/* REQ: View a list of users who have submitted ratings */}
         <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
           <div className="p-6 border-b flex justify-between items-center bg-white">
             <h3 className="font-black text-gray-800 text-xl">Customer Feedback List</h3>
@@ -141,7 +135,6 @@ export default function StoreDashboard() {
           {raters.length === 0 && <p className="p-20 text-center text-gray-400 italic">No ratings found for your store.</p>}
         </div>
 
-        {/* REQ: Update password modal */}
         {showPassModal && (
             <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50">
                 <div className="bg-white p-8 rounded-3xl max-w-sm w-full shadow-2xl animate-in zoom-in">
